@@ -11,6 +11,7 @@ const (
 )
 
 var codeVal = [5]string{"USD", "EUR", "RUB", "KGS", "CNY"}
+var mCurs = map[string]float64{"USDEUR": 0.9667, "USDRUB": 101.68, "USDKGS": 87.0, "USDCNY": 7.33}
 
 func main() {
 	fmt.Println("КОНВЕРТОР ВАЛЮТ")
@@ -18,7 +19,7 @@ func main() {
 	summa := getSum()
 	toCurrency := getValOut(fromCurrency)
 
-	calculateCurs(summa, fromCurrency, toCurrency)
+	calculateCurs(summa, fromCurrency, toCurrency, mCurs)
 }
 
 func getCodeVal(codeNum int) string {
@@ -60,7 +61,6 @@ func getValOut(fromCurrency int) int {
 		fmt.Scan(&val)
 
 		if val < 0 && val >= COUNT_VALS {
-			// ошибка ввода
 			fmt.Println(ERR_MSG)
 			continue
 		}
@@ -89,9 +89,7 @@ func getSum() float64 {
 	}
 }
 
-func calculateCurs(sumIn float64, fromCurrency, toCurrency int) {
-	// заданы курсы базовых пар валют
-	mCurs := map[string]float64{"USDEUR": 0.9667, "USDRUB": 101.68, "USDKGS": 87.0, "USDCNY": 7.33}
+func calculateCurs(sumIn float64, fromCurrency, toCurrency int, mCurs map[string]float64) {
 	var newCurs float64
 
 	if fromCurrency == 0 {
